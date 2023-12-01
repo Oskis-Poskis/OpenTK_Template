@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    "obj": true,
+    "bin": true,
+    ".vscode": true,
+    "OpenTK-Template.sln": true
+  }
+}
