@@ -1,8 +1,8 @@
-
-
+using System.Reflection;
+using System.Runtime.InteropServices;
 using OpenTK.Windowing.Common;
 
-namespace WindowTemplate.Helper
+namespace WindowTemplate.Common
 {
     public class HelperClass
     {
@@ -39,6 +39,30 @@ namespace WindowTemplate.Helper
                 frameCount = 0;
                 elapsedTime = 0.0;
             }
+        }
+    }
+
+    public static class DllResolver
+    {
+        static DllResolver()
+        {
+            NativeLibrary.SetDllImportResolver(typeof(Assimp.AssimpContext).Assembly, DllImportResolver);
+        }
+
+        public static void InitLoader() { }
+
+        public static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+        {
+            if (OperatingSystem.IsLinux())
+            {
+                if (NativeLibrary.TryLoad("/lib/x86_64-linux-gnu/libdl.so.2", assembly, searchPath, out IntPtr lib))
+                {
+                    Console.WriteLine("Exists");
+                    return lib;
+                }
+            }
+
+            return IntPtr.Zero;
         }
     }
 }

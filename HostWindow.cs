@@ -4,9 +4,9 @@ using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
-using WindowTemplate.Helper;
-
 using System.Runtime.InteropServices;
+
+using WindowTemplate.Common;
 
 namespace WindowTemplate
 {
