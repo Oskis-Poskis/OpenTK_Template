@@ -1,5 +1,4 @@
 using System.Text.Json;
-using OpenTK.Graphics.ES11;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
 namespace WindowTemplate
@@ -36,7 +35,7 @@ namespace WindowTemplate
 
         unsafe public void SaveState(Window* WindowPtr)
         {
-            if (Path.Exists(HostWindow.base_directory + "Savewindowstate.txt"))
+            if (Path.Exists(HostWindow.base_directory + "Save/windowstate.txt"))
             {
                 Save();
             }

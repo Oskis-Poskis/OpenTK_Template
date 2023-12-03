@@ -57,7 +57,7 @@ namespace WindowTemplate.Common
             {
                 if (NativeLibrary.TryLoad("/lib/x86_64-linux-gnu/libdl.so.2", assembly, searchPath, out IntPtr lib))
                 {
-                    Console.WriteLine("Exists");
+                    Console.WriteLine("libdl.so.2 exists");
                     return lib;
                 }
             }

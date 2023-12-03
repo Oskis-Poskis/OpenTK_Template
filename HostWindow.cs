@@ -89,7 +89,9 @@ namespace WindowTemplate
             window_aspect = (float)window_size.X / window_size.Y;
         }
 
-        protected unsafe override void OnMaximized(MaximizedEventArgs e)
+        bool enter_fullscreen = false;
+        
+        unsafe protected override void OnMaximized(MaximizedEventArgs e)
         {
             base.OnMaximized(e);
 
@@ -97,11 +99,12 @@ namespace WindowTemplate
             GL.Viewport(0, 0, width, height);
             state.Resize(width, height);
 
+            enter_fullscreen = true;
+
             window_size = new(width, height);
             window_aspect = (float)window_size.X / window_size.Y;
         }
 
-        bool enter_fullscreen = false;
         unsafe protected override void OnKeyDown(KeyboardKeyEventArgs e)
         {
             base.OnKeyDown(e);
