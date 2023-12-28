@@ -23,11 +23,16 @@ namespace WindowTemplate
             }
 
             else window_size = settings.Size;
+            mouse_state = MouseState;
+            keyboard_state = KeyboardState;
         }
 
         WindowSaveState state = new WindowSaveState(new WindowProperties());
 
         public static Vector2 mouse_pos;
+        public static MouseState mouse_state;
+        public static KeyboardState keyboard_state;
+
         public static Vector2i window_size = Vector2i.One;
         public static float window_aspect = 1.0f;
         public static string base_directory = AppDomain.CurrentDomain.BaseDirectory;
@@ -77,6 +82,9 @@ namespace WindowTemplate
         protected override void OnRenderFrame(FrameEventArgs args)
         {
             base.OnRenderFrame(args);
+
+            mouse_pos = MousePosition;
+            mouse_state = MouseState;
         }
 
         unsafe protected override void OnResize(ResizeEventArgs e)
@@ -109,16 +117,14 @@ namespace WindowTemplate
         {
             base.OnKeyDown(e);
 
+            keyboard_state = KeyboardState;
+
             if (e.Key == Keys.F11)
             {
                 enter_fullscreen = HelperClass.ToggleBool(enter_fullscreen);
                 if (enter_fullscreen) GLFW.MaximizeWindow(WindowPtr);
                 else GLFW.RestoreWindow(WindowPtr);
             }
-
-            else if (e.Key == Keys.KeyPad1 | e.Key == Keys.D1) GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Fill);
-            else if (e.Key == Keys.KeyPad2 | e.Key == Keys.D2) GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Line);
-            else if (e.Key == Keys.KeyPad2 | e.Key == Keys.D3) GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Point);
         }
     }
 }

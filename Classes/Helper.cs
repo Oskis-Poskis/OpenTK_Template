@@ -1,6 +1,5 @@
-using System.Reflection;
-using System.Runtime.InteropServices;
 using OpenTK.Windowing.Common;
+using OpenTK.Mathematics;
 
 namespace WindowTemplate.Common
 {
@@ -14,6 +13,12 @@ namespace WindowTemplate.Common
         public static float MapRange(float value, float input_min, float input_max, float output_min, float output_max)
         {
             return (value - input_min) / (input_max - input_min) * (output_max - output_min) + output_min;
+        }
+
+        public static Vector2 Pixels_To_NDC(float x, float y)
+        {
+            return new Vector2(MapRange(x, 0, HostWindow.window_size.X, -1.0f, 1.0f),
+                               MapRange(y, 0, HostWindow.window_size.Y, -1.0f, 1.0f));
         }
 
         public static float RandFloat()
@@ -39,30 +44,6 @@ namespace WindowTemplate.Common
                 frameCount = 0;
                 elapsedTime = 0.0;
             }
-        }
-    }
-
-    public static class DllResolver
-    {
-        static DllResolver()
-        {
-            NativeLibrary.SetDllImportResolver(typeof(Assimp.AssimpContext).Assembly, DllImportResolver);
-        }
-
-        public static void InitLoader() { }
-
-        public static IntPtr DllImportResolver(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
-        {
-            if (OperatingSystem.IsLinux())
-            {
-                if (NativeLibrary.TryLoad("/lib/x86_64-linux-gnu/libdl.so.2", assembly, searchPath, out IntPtr lib))
-                {
-                    Console.WriteLine("libdl.so.2 exists");
-                    return lib;
-                }
-            }
-
-            return IntPtr.Zero;
         }
     }
 }

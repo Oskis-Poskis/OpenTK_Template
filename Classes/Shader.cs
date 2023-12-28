@@ -124,6 +124,12 @@ namespace WindowTemplate.Common
             GL.UniformMatrix4(_uniformLocations[name], true, ref data);
         }
 
+        public void SetVector4(string name, Vector4 data)
+        {
+            GL.UseProgram(Handle);
+            GL.Uniform4(_uniformLocations[name], data);
+        }
+
         public void SetVector3(string name, Vector3 data)
         {
             GL.UseProgram(Handle);
