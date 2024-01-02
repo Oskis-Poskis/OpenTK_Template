@@ -17,6 +17,7 @@ namespace WindowTemplate.Common
             using (var reader = new StreamReader(stream))
             {
                 shaderSource = reader.ReadToEnd();
+                reader.Close();
             }
 
             vertexShader = GL.CreateShader(ShaderType.VertexShader);
@@ -66,9 +67,7 @@ namespace WindowTemplate.Common
             for (var i = 0; i < numberOfUniforms; i++)
             {
                 var key = GL.GetActiveUniform(Handle, i, out _, out _);
-
                 var location = GL.GetUniformLocation(Handle, key);
-
                 _uniformLocations.Add(key, location);
             }
         }
@@ -108,37 +107,31 @@ namespace WindowTemplate.Common
 
         public void SetInt(string name, int data)
         {
-            GL.UseProgram(Handle);
             GL.Uniform1(_uniformLocations[name], data);
         }
 
         public void SetFloat(string name, float data)
         {
-            GL.UseProgram(Handle);
             GL.Uniform1(_uniformLocations[name], data);
         }
 
         public void SetMatrix4(string name, Matrix4 data)
         {
-            GL.UseProgram(Handle);
             GL.UniformMatrix4(_uniformLocations[name], true, ref data);
         }
 
         public void SetVector4(string name, Vector4 data)
         {
-            GL.UseProgram(Handle);
             GL.Uniform4(_uniformLocations[name], data);
         }
 
         public void SetVector3(string name, Vector3 data)
         {
-            GL.UseProgram(Handle);
             GL.Uniform3(_uniformLocations[name], data);
         }
 
         public void SetVector2(string name, Vector2 data)
         {
-            GL.UseProgram(Handle);
             GL.Uniform2(_uniformLocations[name], data);
         }
 

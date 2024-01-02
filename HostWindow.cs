@@ -6,8 +6,6 @@ using OpenTK.Windowing.GraphicsLibraryFramework;
 
 using System.Runtime.InteropServices;
 
-using WindowTemplate.Common;
-
 namespace WindowTemplate
 {
     public class HostWindow : GameWindow
@@ -97,7 +95,7 @@ namespace WindowTemplate
             window_aspect = (float)window_size.X / window_size.Y;
         }
 
-        bool enter_fullscreen = false;
+        bool is_fullscreen = false;
         
         unsafe protected override void OnMaximized(MaximizedEventArgs e)
         {
@@ -107,7 +105,7 @@ namespace WindowTemplate
             GL.Viewport(0, 0, width, height);
             state.Resize(width, height);
 
-            enter_fullscreen = true;
+            is_fullscreen = true;
 
             window_size = new(width, height);
             window_aspect = (float)window_size.X / window_size.Y;
@@ -121,9 +119,16 @@ namespace WindowTemplate
 
             if (e.Key == Keys.F11)
             {
-                enter_fullscreen = HelperClass.ToggleBool(enter_fullscreen);
-                if (enter_fullscreen) GLFW.MaximizeWindow(WindowPtr);
-                else GLFW.RestoreWindow(WindowPtr);
+                if (!is_fullscreen)
+                {
+                    GLFW.MaximizeWindow(WindowPtr);
+                    is_fullscreen = true;
+                }
+                else
+                {
+                    GLFW.RestoreWindow(WindowPtr);
+                    is_fullscreen = false;
+                }
             }
         }
     }

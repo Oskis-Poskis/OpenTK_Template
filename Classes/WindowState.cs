@@ -42,6 +42,7 @@ namespace WindowTemplate
 
             else
             {
+                Console.WriteLine("Window state save directory  does not exist, creating one:\n" + save_path);
                 Directory.CreateDirectory(HostWindow.base_directory + "Save");
                 Save();
             }
@@ -87,13 +88,6 @@ namespace WindowTemplate
                     properties.width = 500;
                     properties.height = 500;
                 }
-            }
-
-            else
-            {
-                Console.WriteLine("Window state file path does not exist, creating save file:\n" + save_path);
-                properties.positionx = 2560/2 - properties.width / 2;
-                properties.positiony = 1440/2 - properties.height / 2;
             }
 
             GLFW.SetWindowSize(WindowPtr, properties.width, properties.height);
